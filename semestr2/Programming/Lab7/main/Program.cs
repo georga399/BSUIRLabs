@@ -1,0 +1,16 @@
+﻿using QuadroNameSpace;
+Console.WriteLine("Hello, World!");
+double x1, x2;
+Quadro eq1 = new Quadro(1, -4, 3);
+Console.WriteLine(eq1);
+eq1.CountX(out x1, out x2);
+Console.WriteLine($"Solves: {x1}, {x2}");
+Quadro eq2 = eq1++;
+Console.WriteLine($" a1 = {eq1[0]}, b1 = {eq1[1]}, c1 = {eq1[2]}");
+Console.WriteLine(eq2);
+eq1--;
+Console.WriteLine(eq1);
+Quadro eq3 = eq1+eq2;
+Console.WriteLine(eq3);
+eq3 = eq3/3;
+Console.WriteLine(eq3);

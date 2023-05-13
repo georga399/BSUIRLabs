@@ -1,0 +1,64 @@
+#0
+City: Gomel
+Date: 12.12.1212
+Tarriff: 12.12
+Duration: 12.12
+Number of caller: 1212121212
+Number of calling: 1212121212
+_______________________
+#1
+City: Minsk
+Date: 12.12.2022
+Tarriff: 12.12
+Duration: 12.09
+Number of caller: 1212121234
+Number of calling: 1212121678
+_______________________
+#2
+City: Minsk
+Date: 12.01.2022
+Tarriff: 12.12
+Duration: 12.09
+Number of caller: 0000000010
+Number of calling: 1900000001
+_______________________
+#3
+City: Gomel
+Date: 12.12.2022
+Tarriff: 0.1
+Duration: 12.09
+Number of caller: 1212121234
+Number of calling: 1212121678
+_______________________
+#4
+City: Brest
+Date: 29.12.2022
+Tarriff: 5
+Duration: 12.09
+Number of caller: 1432222234
+Number of calling: 1111111111
+_______________________
+#5
+City: Minsk
+Date: 12.12.2022
+Tarriff: 10
+Duration: 12.09
+Number of caller: 2222221121
+Number of calling: 3223232323
+_______________________
+#6
+City: Minsk
+Date: 12.12.2022
+Tarriff: 12.12
+Duration: 12.09
+Number of caller: 3232323232
+Number of calling: 1212121678
+_______________________
+#7
+City: Minsk
+Date: 12.06.2022
+Tarriff: 12.12
+Duration: 12.09
+Number of caller: 1212121234
+Number of calling: 1212121678
+_______________________

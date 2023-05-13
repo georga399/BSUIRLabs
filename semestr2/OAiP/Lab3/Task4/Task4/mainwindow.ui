@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>330</width>
+    <height>329</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QTabWidget" name="tabWidget">
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <widget class="QWidget" name="tab">
+       <attribute name="title">
+        <string>Tab 1</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QTableWidget" name="tableWidget"/>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="tab_2">
+       <attribute name="title">
+        <string>Tab 2</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <widget class="QTableWidget" name="tableWidget_2"/>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+    <item>
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>330</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuVector_operations">
+    <property name="title">
+     <string>Add/Delete</string>
+    </property>
+    <addaction name="actionemplace_back"/>
+    <addaction name="actionemplace"/>
+    <addaction name="actionclear"/>
+    <addaction name="actionsort"/>
+    <addaction name="actionclear_2"/>
+    <addaction name="actionresize"/>
+    <addaction name="actionreserve"/>
+   </widget>
+   <widget class="QMenu" name="menuChange">
+    <property name="title">
+     <string>Change</string>
+    </property>
+    <addaction name="actionChange_value"/>
+   </widget>
+   <widget class="QMenu" name="menuMove">
+    <property name="title">
+     <string>Move</string>
+    </property>
+    <addaction name="actionSwap_2"/>
+    <addaction name="actionAsign_from_another"/>
+   </widget>
+   <addaction name="menuVector_operations"/>
+   <addaction name="menuChange"/>
+   <addaction name="menuMove"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionemplace_back">
+   <property name="text">
+    <string>emplace_back()</string>
+   </property>
+  </action>
+  <action name="actionemplace">
+   <property name="text">
+    <string>emplace()</string>
+   </property>
+  </action>
+  <action name="actionclear">
+   <property name="text">
+    <string>pop_back()</string>
+   </property>
+  </action>
+  <action name="actionsort">
+   <property name="text">
+    <string>erase()</string>
+   </property>
+  </action>
+  <action name="actionclear_2">
+   <property name="text">
+    <string>clear()</string>
+   </property>
+  </action>
+  <action name="actionresize">
+   <property name="text">
+    <string>resize()</string>
+   </property>
+  </action>
+  <action name="actionreserve">
+   <property name="text">
+    <string>reserve()</string>
+   </property>
+  </action>
+  <action name="actionChange_value">
+   <property name="text">
+    <string>Change value</string>
+   </property>
+  </action>
+  <action name="actionSwap">
+   <property name="text">
+    <string>Swap</string>
+   </property>
+  </action>
+  <action name="actionSwap_2">
+   <property name="text">
+    <string>Swap</string>
+   </property>
+  </action>
+  <action name="actionAsign_from_another">
+   <property name="text">
+    <string>Assign from another</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

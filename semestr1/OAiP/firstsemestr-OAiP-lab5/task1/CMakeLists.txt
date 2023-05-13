@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.13)
+project(task1)
+add_executable(main main.cpp)
+#add_library(inputs inputs.cpp)
+add_library(algo algo.cpp)
+target_link_libraries(main algo)

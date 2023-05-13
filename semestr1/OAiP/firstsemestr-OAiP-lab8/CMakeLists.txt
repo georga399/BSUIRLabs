@@ -1,0 +1,23 @@
+cmake_minimum_required(VERSION 3.1)
+project(lab8)
+add_executable(task1 
+    task1/main.cpp 
+    task1/inputs.cpp 
+    task1/Init.cpp 
+    task1/Show.cpp 
+    task1/Free.cpp 
+    task1/Sort.cpp 
+    task1/Change.cpp)
+add_executable(task2 
+    task2/main.cpp 
+    task2/Init.cpp 
+    task2/Show.cpp 
+    task2/Destruct.cpp 
+    task2/Change.cpp 
+    task2/Fiout.cpp)
+add_executable(task3 
+    task3/main.cpp 
+    task3/airwayclass.cpp 
+    task3/Change.cpp 
+    task3/inputs.cpp 
+    task3/show.cpp)

@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>420</width>
+    <height>336</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QPlainTextEdit" name="plainTextEdit"/>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>420</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuOpen_file">
+    <property name="title">
+     <string>Open file</string>
+    </property>
+    <addaction name="actionOpen"/>
+   </widget>
+   <widget class="QMenu" name="menuParse">
+    <property name="title">
+     <string>Parse</string>
+    </property>
+    <addaction name="actionGet_all_variables"/>
+    <addaction name="actionCount_of_classes"/>
+    <addaction name="actionCount_of_arrays"/>
+    <addaction name="actionGet_prototypes_of_func"/>
+    <addaction name="actionGet_all_positions_of_changing_vars_and_arrays"/>
+    <addaction name="actionGet_local_vars"/>
+    <addaction name="actionGet_overrided_funcs"/>
+    <addaction name="actionDeeps_of_branches"/>
+    <addaction name="actionLogic_warnings"/>
+   </widget>
+   <addaction name="menuOpen_file"/>
+   <addaction name="menuParse"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionOpen">
+   <property name="text">
+    <string>Open</string>
+   </property>
+  </action>
+  <action name="actionGet_all_variables">
+   <property name="text">
+    <string>Get all variables</string>
+   </property>
+  </action>
+  <action name="actionCount_of_classes">
+   <property name="text">
+    <string>Count of classes/structs</string>
+   </property>
+  </action>
+  <action name="actionCount_of_arrays">
+   <property name="text">
+    <string>Count of arrays</string>
+   </property>
+  </action>
+  <action name="actionGet_prototypes_of_func">
+   <property name="text">
+    <string>Get prototypes of func</string>
+   </property>
+  </action>
+  <action name="actionGet_all_positions_of_changing_vars_and_arrays">
+   <property name="text">
+    <string>Get all positions of changing vars and arrays</string>
+   </property>
+  </action>
+  <action name="actionGet_local_vars">
+   <property name="text">
+    <string>Get local vars</string>
+   </property>
+  </action>
+  <action name="actionGet_overrided_funcs">
+   <property name="text">
+    <string>Get overrided funcs</string>
+   </property>
+  </action>
+  <action name="actionDeeps_of_branches">
+   <property name="text">
+    <string>Deeps of branches</string>
+   </property>
+  </action>
+  <action name="actionLogic_warnings">
+   <property name="text">
+    <string>Logic warnings</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
