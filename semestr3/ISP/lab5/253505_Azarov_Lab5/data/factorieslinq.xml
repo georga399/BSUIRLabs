@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfFactory>
+  <factory postCode="121212">
+    <address>Minsk</address>
+    <storage name="phones">
+      <director>Pushkin</director>
+      <countOfDetails>9999</countOfDetails>
+    </storage>
+  </factory>
+  <factory postCode="232323">
+    <address>Moscow</address>
+    <storage name="cabels">
+      <director>Ivanov</director>
+      <countOfDetails>10000</countOfDetails>
+    </storage>
+  </factory>
+  <factory postCode="434343">
+    <address>Pekin</address>
+    <storage name="adapters">
+      <director>Lermontov</director>
+      <countOfDetails>5000</countOfDetails>
+    </storage>
+  </factory>
+  <factory postCode="454545">
+    <address>Stambul</address>
+    <storage name="displays">
+      <director>Tolstoy</director>
+      <countOfDetails>1200</countOfDetails>
+    </storage>
+  </factory>
+  <factory postCode="909090">
+    <address>Deli</address>
+    <storage name="volumes">
+      <director>Checkhov</director>
+      <countOfDetails>6000</countOfDetails>
+    </storage>
+  </factory>
+  <factory postCode="656565">
+    <address>Minsk</address>
+    <storage name="batteries">
+      <director>Pushkin</director>
+      <countOfDetails>5500</countOfDetails>
+    </storage>
+  </factory>
+</ArrayOfFactory>
