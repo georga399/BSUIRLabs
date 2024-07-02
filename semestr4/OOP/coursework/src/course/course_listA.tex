@@ -1,0 +1,250 @@
+\sectioncentered*{Приложение А}
+\addcontentsline{toc}{section}{Приложение А}
+\normalfont
+\vspace{-\baselineskip} %
+\begin{center}
+       (\textbf{обязательное})
+
+\textbf{Код программы}
+
+\end{center}
+
+% \setmonofont{Courier New}[SizeFeatures={Size=10}]
+\begin{lstlisting}[style=csharpinlinestyle]
+public class UserService : IUserService
+{
+    private readonly IUnitOfWork _unitOfWork;
+    public UserService(IUnitOfWork unitOfWork)
+    {
+        _unitOfWork = unitOfWork;
+    }
+    public async Task<User> GetUser(string username)
+    {
+        return await _unitOfWork.UserRepository.FirstOrDefaultAsync(user => user.Name == username);
+    }
+    public async Task<User> GetUserById(Guid id)
+    {
+        return await _unitOfWork.UserRepository.FirstOrDefaultAsync(u => u.Id == id);
+    }
+    public async Task<string> GetUserName(Guid id)
+    {
+        var user = await GetUserById(id);
+        return user.Name;
+    }
+}
+public class CategoryService : ICategoryService
+{
+    private readonly IUnitOfWork _unitOfWork;
+    public CategoryService(IUnitOfWork unitOfWork)
+    {
+        _unitOfWork = unitOfWork;
+    }
+    public async Task<IEnumerable<Category>> GetAllAsync()
+    {
+        return await _unitOfWork.CategoryRepository.ListAllAsync();
+    }
+    public async Task<Category> GetCategoryAsync(Guid id)
+    {
+        return await _unitOfWork.CategoryRepository.FirstOrDefaultAsync(c => c.Id == id);
+    }
+    public async Task<(bool, Category)> CreateCategoryAsync(string name)
+    {
+        var category = new Category { Name = name };
+        var categoryId = await _unitOfWork.CategoryRepository.AddAsync(category);
+        await _unitOfWork.SaveAllAsync();
+        return (categoryId != Guid.Empty, category);
+    }
+    public async Task<bool> DeleteCategoryAsync(Guid id)
+    {
+        var category = await _unitOfWork.CategoryRepository.FirstOrDefaultAsync(c => c.Id == id);
+        if (category != null)
+        {
+            await _unitOfWork.CategoryRepository.DeleteAsync(category);
+            await _unitOfWork.SaveAllAsync();
+            return true;
+        }
+        return false;
+    }
+    public async Task<Category> GetCategoryAsync(string name)
+    {
+        string lowername = name.ToLower();
+        return await _unitOfWork.CategoryRepository.FirstOrDefaultAsync(c => c.Name.ToLower() == lowername);
+    }
+    public async Task<string> GetCategoryName(Guid id)
+    {
+        var cat = await GetCategoryAsync(id);
+        return cat.Name;
+    }
+    public async Task<(bool, Category)> ChangeCategoryAsync(Guid id, Category category)
+    {
+        var foundcategory = await _unitOfWork.CategoryRepository.FirstOrDefaultAsync(c => c.Id == id);
+        if (foundcategory != null)
+        {
+            foundcategory.Name = category.Name;
+            await _unitOfWork.CategoryRepository.UpdateAsync(foundcategory);
+            await _unitOfWork.SaveAllAsync();
+            return (true, foundcategory);
+        }
+        return (false, null)!;
+    }
+}
+public class ItemService : IItemService
+{
+    private readonly IUnitOfWork _unitOfWork;
+    public ItemService(IUnitOfWork unitOfWork)
+    {
+        _unitOfWork = unitOfWork;
+    }
+    public async Task<Item> GetItemAsync(Guid id)
+    {
+        return await _unitOfWork.ItemRepository.FirstOrDefaultAsync(i => i.Id == id);
+    }
+    public async Task<IEnumerable<Item>> GetItemsByCategoryAsync(string categoryName)
+    {
+        var lowcatname = categoryName.ToLower();
+        var category = await _unitOfWork.CategoryRepository.FirstOrDefaultAsync(c => c.Name.ToLower() == lowcatname);
+        if (category == null)
+            return null;
+
+        return await _unitOfWork.ItemRepository.ListAsync(i => i.CategoryId == category.Id);
+    }
+    public async Task<IEnumerable<Item>> GetItemsByUserIdAsync(Guid userId)
+    {
+        return await _unitOfWork.ItemRepository.ListAsync(i => i.UserId == userId);
+    }
+    public async Task<IEnumerable<Item>> GetItemsByUserAsync(string username)
+    {
+        var user = await _unitOfWork.UserRepository.FirstOrDefaultAsync(u => u.Name == username);
+        if (user == null)
+            return null;
+        return await GetItemsByUserIdAsync(user.Id);
+    }
+    public async Task<(bool, Item)> ChangeItemStatusAsync(Guid itemId, ItemStatus status)
+    {
+        if(status > ItemStatus.Finished || status < ItemStatus.WaitingApprove)
+            return (false, null);
+        var item = await GetItemAsync(itemId);
+        if (item == null)
+            return (false, null);
+        item.ItemStatus = status;
+        await _unitOfWork.ItemRepository.UpdateAsync(item);
+        await _unitOfWork.SaveAllAsync();
+        return (true, item);
+    }
+    public async Task<(bool, Item)> ChangeItemDetailsAsync(Guid itemId, Item updatedItem, string username)
+    {
+        var item = await GetItemAsync(itemId);
+        if (item == null)
+            return (false, null);
+        var user = await _unitOfWork.UserRepository.FirstOrDefaultAsync(u => u.Name == username);
+        if(user == null)
+            return (false, null);
+        if(item.UserId != user.Id && user.Role != UserRole.Admin && user.Role != UserRole.Staff)
+            return (false, null);
+        if (updatedItem.StartTime <= DateTime.UtcNow || updatedItem.EndTime <= DateTime.UtcNow)
+            return (false, item);
+        if (updatedItem.EndTime <= updatedItem.StartTime)
+            return (false, item);
+        if (updatedItem.StartingPrice < 0 || updatedItem.MinIncrease < 0)
+            return (false, item);
+        item.Title = updatedItem.Title;
+        item.Description = updatedItem.Description;
+        item.StartingPrice = updatedItem.StartingPrice;
+        item.MinIncrease = updatedItem.MinIncrease;
+        item.StartTime = updatedItem.StartTime;
+        item.EndTime = updatedItem.EndTime;
+        item.ItemStatus = ItemStatus.Updated;
+        await _unitOfWork.ItemRepository.UpdateAsync(item);
+        await _unitOfWork.SaveAllAsync();
+        return (true, item);
+    }
+    public async Task DeleteItemAsync(Guid itemId)
+    {
+        var item = await GetItemAsync(itemId);
+        if (item != null)
+        {
+            await _unitOfWork.ItemRepository.DeleteAsync(item);
+            await _unitOfWork.SaveAllAsync();
+        }
+    }
+    public async Task<(bool, Item)> CloseItemAsync(Guid itemId, string username)
+    {
+        var item = await GetItemAsync(itemId);
+        var user = await _unitOfWork.UserRepository.FirstOrDefaultAsync(u => u.Name == username);
+        if (item == null)
+            return (false, null);
+        if(user.Id != item.UserId && user.Role != UserRole.Admin && user.Role != UserRole.Staff)
+            return (false, null);
+        item.ItemStatus = ItemStatus.Finished;
+        await _unitOfWork.ItemRepository.UpdateAsync(item);
+        await _unitOfWork.SaveAllAsync();
+        return (true, item);
+    }
+    public async Task<bool> DeleteItemAsync(Guid itemId, string username)
+    {
+        var item = await GetItemAsync(itemId);
+        var user = await _unitOfWork.UserRepository.FirstOrDefaultAsync(u => u.Name == username);
+        if (item == null)
+            return false;
+        if(user.Id != item.UserId && user.Role != UserRole.Admin && user.Role != UserRole.Staff)
+            return false;
+        await _unitOfWork.ItemRepository.DeleteAsync(item);
+        await _unitOfWork.SaveAllAsync();
+        return true;
+    }
+}
+public class BidService : IBidService
+{
+    private readonly IUnitOfWork _unitOfWork;
+    public BidService(IUnitOfWork unitOfWork)
+    {
+        _unitOfWork = unitOfWork;
+    }
+    public async Task<IEnumerable<Bid>> GetBidsByItemAsync(Guid itemId)
+    {
+        return await _unitOfWork.BidRepository.ListAsync(b => b.ItemId == itemId);
+    }
+    public async Task<IEnumerable<Bid>> GetBidsByUserAsync(string username)
+    {
+        var user = await _unitOfWork.UserRepository.FirstOrDefaultAsync(u => u.Name == username);
+        if (user == null)
+            return Enumerable.Empty<Bid>();
+        return await _unitOfWork.BidRepository.ListAsync(b => b.UserId == user.Id);
+    }
+    public async Task<(bool, Bid)> CreateBidAsync(decimal amount, string username, Guid itemId)
+    {
+        var user = await _unitOfWork.UserRepository.FirstOrDefaultAsync(u => u.Name == username);
+        var item = await _unitOfWork.ItemRepository.FirstOrDefaultAsync(i => i.Id == itemId);
+        if (user == null || item == null || amount <= 0 || item.StartingPrice > amount)
+            return (false, null);
+        if(item.StartTime > DateTime.UtcNow || item.EndTime < DateTime.UtcNow)
+            return (false, null);
+        if(item.ItemStatus != ItemStatus.Active)
+            return (false, null);
+        var lastBid = await _unitOfWork.BidRepository
+            .ListAsync(b => b.ItemId == itemId)
+            .ContinueWith(task => task.Result.OrderByDescending(b => b.DateTime).FirstOrDefault());   
+        if(lastBid != null && 
+            (lastBid.Amount >= amount 
+                || lastBid.Amount + item.MinIncrease > amount))
+        {
+            return (false, null);
+        }
+        var bid = new Bid
+        {
+            Amount = amount,
+            UserId = user.Id,
+            ItemId = item.Id,
+            DateTime = DateTime.UtcNow
+        };
+        var bidId = await _unitOfWork.BidRepository.AddAsync(bid);
+        await _unitOfWork.SaveAllAsync();
+        if(bidId != Guid.Empty)
+        {
+            return (true, bid);
+        }
+        return (false, null);
+    }
+}
+\end{lstlisting}
+
